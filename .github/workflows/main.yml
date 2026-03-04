@@ -1,12 +1,11 @@
 name: Run XMRig Task
 
 on:
-  workflow_dispatch: # Allows you to start it manually
+  workflow_dispatch:
 
 jobs:
   run-xmrig:
-    runs-on: windows-latest # Use 'self-hosted' if running on your own machine
-
+    runs-on: windows-latest
     steps:
       - name: Download XMRig
         shell: powershell
